@@ -1,5 +1,6 @@
 from django.http.response import HttpResponse, JsonResponse, FileResponse
 import os
+from django.shortcuts import render
 
 def villa_hello(request):
     return HttpResponse("Hello Kelassor")
@@ -25,3 +26,11 @@ def test_file(request):
         open(file, 'rb'),
         as_attachment=True
     )
+
+
+def test_html(request, year):
+    my_data = {
+        'year':year,
+        'month' : 12
+    }
+    return render(request, 'villa/main.html', context=my_data)
