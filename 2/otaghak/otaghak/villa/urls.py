@@ -2,7 +2,7 @@ from django.urls import path
 from villa.views import (villa_hello, villa_main, 
                     villa_city, test_json, test_file, 
                     test_html, villa_list, villa_city,villa_price,
-                    add_villa)
+                    add_villa, delete_villa, update_villa)
 
 
 urlpatterns = [
@@ -15,5 +15,7 @@ urlpatterns = [
     path('city/<str:city_name>', villa_city),
     path('price/<int:selected_price>', villa_price),
     path('add-villa', add_villa),
+    path('delete-villa/<int:place_id>', delete_villa),
+    path('update-villa/<int:place_id>', update_villa),
     path('<str:city_name>', villa_city)
 ]

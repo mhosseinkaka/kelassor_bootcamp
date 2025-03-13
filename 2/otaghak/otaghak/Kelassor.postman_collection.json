@@ -1,0 +1,122 @@
+{
+	"info": {
+		"_postman_id": "ced7496b-92e2-4037-a5a3-6466faa428e5",
+		"name": "Kelassor",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "6754169"
+	},
+	"item": [
+		{
+			"name": "Villa List",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/villa/villa-list",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"villa",
+						"villa-list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Villa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\" : \"villa3\",\n    \"address\" : \"rasht\",\n    \"price\" : 200,\n    \"datetime\" : \"2025-03-13 10:00:00\",\n    \"seller\" : 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/villa/add-villa",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"villa",
+						"add-villa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Villa",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/villa/delete-villa/4",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"villa",
+						"delete-villa",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Villa",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\" : \"new villa\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/villa/update-villa/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"villa",
+						"update-villa",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

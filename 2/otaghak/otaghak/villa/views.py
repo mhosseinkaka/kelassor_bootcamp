@@ -42,7 +42,7 @@ def test_html(request, year):
 
 
 def villa_list(request):
-    my_all_villas = Place.objects.all().order_by("-price").values("title","address","price")
+    my_all_villas = Place.objects.all().order_by("-price").values("title","address","price","id")
     my_all_villas = list(my_all_villas)
     return JsonResponse(my_all_villas ,safe=False)
 
@@ -73,3 +73,20 @@ def add_villa(request):
             # seller_id = data.get('seller')
         )
         return HttpResponse("Object Created!")
+
+
+@csrf_exempt
+def delete_villa(request, place_id):
+    if request.method == 'DELETE':
+        Place.objects.get(id=place_id).delete()
+        return HttpResponse("Object Deleted!")
+
+
+@csrf_exempt
+def update_villa(request, place_id):
+    if request.method == 'PATCH':
+        data = json.loads(request.body)
+        place = Place.objects.get(id=place_id)
+        place.title = data.get('title')
+        place.save()
+        return HttpResponse("Object Updated!")
