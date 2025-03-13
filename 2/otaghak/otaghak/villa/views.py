@@ -1,6 +1,11 @@
 from django.http.response import HttpResponse, JsonResponse, FileResponse
 import os
 from django.shortcuts import render
+from villa.models import Place, Seller
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+
 
 def villa_hello(request):
     return HttpResponse("Hello Kelassor")
@@ -34,3 +39,37 @@ def test_html(request, year):
         'month' : 12
     }
     return render(request, 'villa/main.html', context=my_data)
+
+
+def villa_list(request):
+    my_all_villas = Place.objects.all().order_by("-price").values("title","address","price")
+    my_all_villas = list(my_all_villas)
+    return JsonResponse(my_all_villas ,safe=False)
+
+
+def villa_city(request, city_name):
+    my_all_villas = Place.objects.filter(address=city_name)
+    return HttpResponse(my_all_villas)
+
+
+def villa_price(request, selected_price):
+    my_all_villas = Place.objects.filter(price__lte=selected_price)
+    # my_all_villas2 = Place.objects.filter(price__gte=selected_price)
+    # my_all_villas3 = Place.objects.filter(price__lte=selected_price, price__lte=selected_price)
+    # my_all_villas = Place.objects.filter(is_valid=True)
+    return HttpResponse(my_all_villas)
+
+
+@csrf_exempt
+def add_villa(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        Place.objects.create(
+            title=data.get('title'),
+            address=data.get('address'),
+            price=data.get('price'),
+            datetime=data.get('datetime'),
+            seller=Seller.objects.get(id=data.get('seller')),
+            # seller_id = data.get('seller')
+        )
+        return HttpResponse("Object Created!")
