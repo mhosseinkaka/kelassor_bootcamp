@@ -20,4 +20,4 @@ class ForeignVillaSerializer(ModelSerializer):
 class ForeignVillaListSerializer(ModelSerializer):
     class Meta:
         model = ForeignVilla
-        fields = ['id', 'title']
+        fields = '__all__'

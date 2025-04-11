@@ -2,7 +2,10 @@ from foreign_villa.models import ForeignVilla
 from django.http.response import JsonResponse
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, DestroyAPIView, UpdateAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from foreign_villa.serializers import ForeignVillaSerializer, ForeignVillaListSerializer
-from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthenticatedOrReadOnly, AllowAny
+from foreign_villa.permissions import IsAlireza
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 
 def villa_list(request):
@@ -13,12 +16,17 @@ def villa_list(request):
 
 # return list of foreign villas
 class VillaListView(ListAPIView):
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     queryset = ForeignVilla.objects.all()
     serializer_class = ForeignVillaListSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['seller','creator']
+    search_fields = ['title']
+    ordering_fields = ['price']
 
 
 class VillaRetrieveView(RetrieveAPIView):
+    permission_classes = [IsAlireza]
     queryset = ForeignVilla.objects.all()
     serializer_class = ForeignVillaSerializer
 
