@@ -6,6 +6,9 @@ class Seller(models.Model):
     phone = models.CharField(max_length=20)
     national_id = models.CharField(max_length=11, unique=True)
     email = models.EmailField(null=True, blank=True) #optional
+    
+    def __str__(self):
+        return self.name
 
 
 class Place(models.Model):
