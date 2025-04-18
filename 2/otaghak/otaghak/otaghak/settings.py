@@ -141,3 +141,23 @@ SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7)
 }
+
+CELERY_ROUTES = {
+    'foreign_villa.tasks.send_sms_to_user' : {'queue': 'celery'},
+}
+
+CELERY_BEAT_SCHEDULE = {
+    'check_positions': {
+        'task': 'foreign_villa.tasks.send_sms_to_user',
+        'schedule': timedelta(days=1),
+    },
+}
+
+CELERY_BROKER_URL = 'amqp://localhost'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+    }
+}

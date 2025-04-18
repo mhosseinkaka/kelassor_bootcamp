@@ -6,6 +6,8 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser, IsAuthentic
 from foreign_villa.permissions import IsAlireza
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from foreign_villa.tasks import send_sms_to_user
+from django.core.cache import cache
 
 
 def villa_list(request):
@@ -40,6 +42,12 @@ class CreateVillaView(CreateAPIView):
         serializer.save(
             creator = self.request.user 
         )
+        # sms to user
+        send_sms_to_user.delay()
+        # save data to cache
+        cache.set('otp', '1234', timeout=120)
+        # get data from cache
+        saved_otp =cache.get('otp')
 
 
 class DeleteVillaView(DestroyAPIView):
